@@ -1,17 +1,37 @@
 <?php
+$to = "umerakmalku@gmail.com"; // Your Email
 
-	$to = "designcurved1569@gmail.com"; // this is your Email address
-	$from  = $_POST['email']; // this is the sender's Email address
-	$sender_name = $_POST['name'];
-	$phone = $_POST['phone'];
-	$subject = $_POST['subject'];
-	$note = $_POST['note'];
+// Sanitize input
+$from = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+$sender_name = htmlspecialchars($_POST['name']);
+$phone = htmlspecialchars($_POST['phone']);
+$subject_line = htmlspecialchars($_POST['subject']);
+$note = htmlspecialchars($_POST['note']);
 
-	$subject = "Form submission";
+// Validate email
+if (!filter_var($from, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo "Invalid email format.";
+    exit;
+}
 
-	$message = $sender_name . " has send the contact message. His / Her contact subject is " .  $subject . " and his / her phone number is " . $phone . ". He / she wrote the following... ". "\n\n" . $note;
+// Compose message
+$subject = "New Contact Form Submission";
+$message = "$sender_name has sent a contact message.\n\n";
+$message .= "Subject: $subject_line\n";
+$message .= "Phone: $phone\n\n";
+$message .= "Message:\n$note\n";
 
-	$headers = 'From: ' . $from;
-	mail($to, $subject, $message, $headers);
+// Set headers
+$headers = "From: no-reply@yourdomain.com\r\n";
+$headers .= "Reply-To: $from\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
+// Send email
+if (mail($to, $subject, $message, $headers)) {
+    echo "success";
+} else {
+    http_response_code(500);
+    echo "error";
+}
 ?>

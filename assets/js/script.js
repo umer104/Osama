@@ -44,7 +44,7 @@
     -------------------------------------------*/
     function preloader() {
         if ($('.preloader').length) {
-            $('.preloader').delay(100).fadeOut(500, function () {
+            $('.preloader').delay(100).fadeOut(300, function () {
 
                 //active wow
                 wow.init();
@@ -254,25 +254,33 @@
 
             submitHandler: function (form) {
                 $.ajax({
-                    type: "POST",
-                    url: "mail-contact.php",
-                    data: $(form).serialize(),
-                    success: function () {
-                        $("#loader").hide();
-                        $("#success").slideDown("slow");
-                        setTimeout(function () {
-                            $("#success").slideUp("slow");
-                        }, 3000);
-                        form.reset();
-                    },
-                    error: function () {
-                        $("#loader").hide();
-                        $("#error").slideDown("slow");
-                        setTimeout(function () {
-                            $("#error").slideUp("slow");
-                        }, 3000);
-                    }
-                });
+    type: "POST",
+    url: "mail-contact.php",
+    data: $(form).serialize(),
+    success: function (response) {
+        $("#loader").hide();
+        if (response.trim() === "success") {
+            $("#success").slideDown("slow");
+            setTimeout(function () {
+                $("#success").slideUp("slow");
+            }, 3000);
+            form.reset();
+        } else {
+            $("#error").slideDown("slow");
+            setTimeout(function () {
+                $("#error").slideUp("slow");
+            }, 3000);
+        }
+    },
+    error: function () {
+        $("#loader").hide();
+        $("#error").slideDown("slow");
+        setTimeout(function () {
+            $("#error").slideUp("slow");
+        }, 3000);
+    }
+});
+
                 return false; // required to block normal submit since you used ajax
             }
 
