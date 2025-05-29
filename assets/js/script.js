@@ -254,29 +254,41 @@
 
             submitHandler: function (form) {
     $("#loader").show();  // Show loader immediately on submit
+    $("#submit-btn").prop("disabled", true); // Disable submit button
+
+    var minLoaderTime = 3000; // 3 seconds minimum loader time
+    var startTime = Date.now();
 
     $.ajax({
         type: "POST",
         url: "mail-contact.php",
         data: $(form).serialize(),
         success: function () {
-            // $("#loader").hide();
-            $("#success").slideDown("slow");
+            var elapsed = Date.now() - startTime;
+            var delay = Math.max(minLoaderTime - elapsed, 0);
+
             setTimeout(function () {
-                $("#success").slideUp("slow");
-            }, 3000);
-            form.reset();
+                $("#loader").hide();
+                $("#submit-btn").prop("disabled", false);
+                $("#success").slideDown("slow").delay(3000).slideUp("slow");
+                form.reset();
+            }, delay);
         },
         error: function () {
-            // $("#loader").hide();
-            $("#error").slideDown("slow");
+            var elapsed = Date.now() - startTime;
+            var delay = Math.max(minLoaderTime - elapsed, 0);
+
             setTimeout(function () {
-                $("#error").slideUp("slow");
-            }, 3000);
+                $("#loader").hide();
+                $("#submit-btn").prop("disabled", false);
+                $("#error").slideDown("slow").delay(3000).slideUp("slow");
+            }, delay);
         }
     });
+
     return false;
 }
+
 
 
         });
