@@ -46,17 +46,19 @@ var $circle = $('.mouse-circle-mover'),
     $follow = $('.mouse-circle-mover-follow');
 
 function moveCircle(e) {
-    TweenLite.to($circle, 1, {
+    TweenLite.to($circle[0], 1, {
         x: e.clientX,
         y: e.clientY
     });
-    TweenLite.to($follow, 1.5, {
+    TweenLite.to($follow[0], 1.5, {
         x: e.clientX,
         y: e.clientY
     });
 }
 
-$(window).on('mousemove', moveCircle);
+if ($circle.length || $follow.length) {
+    $(window).on('mousemove', moveCircle);
+}
 
 
 // Button Hover Animation
