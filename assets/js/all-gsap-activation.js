@@ -19,7 +19,7 @@ menuItems.forEach(item => {
         event.preventDefault();
         const targetId = this.getAttribute('data-target');
         const targetSection = document.getElementById(targetId);
-        gsap.to(window, { duration: 1, scrollTo: { y: targetSection, offsetY: 0 } });
+        gsap.to(window, { duration: 1, scrollTo: targetSection });
     });
 });
 
@@ -46,19 +46,17 @@ var $circle = $('.mouse-circle-mover'),
     $follow = $('.mouse-circle-mover-follow');
 
 function moveCircle(e) {
-    TweenLite.to($circle[0], 1, {
+    TweenLite.to($circle, 1, {
         x: e.clientX,
         y: e.clientY
     });
-    TweenLite.to($follow[0], 1.5, {
+    TweenLite.to($follow, 1.5, {
         x: e.clientX,
         y: e.clientY
     });
 }
 
-if ($circle.length || $follow.length) {
-    $(window).on('mousemove', moveCircle);
-}
+$(window).on('mousemove', moveCircle);
 
 
 // Button Hover Animation
