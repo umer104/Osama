@@ -260,7 +260,7 @@
         url: "mail-contact.php",
         data: $(form).serialize(),
         success: function () {
-            $("#loader").hide();
+            // $("#loader").hide();
             $("#success").slideDown("slow");
             setTimeout(function () {
                 $("#success").slideUp("slow");
@@ -268,7 +268,7 @@
             form.reset();
         },
         error: function () {
-            $("#loader").hide();
+            // $("#loader").hide();
             $("#error").slideDown("slow");
             setTimeout(function () {
                 $("#error").slideUp("slow");
