@@ -254,6 +254,7 @@
 
             submitHandler: function (form) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $.ajax({
                     type: "POST",
                     url: "mail-contact.php",
@@ -278,12 +279,20 @@
             }
 =======
     $("#loader").show();  // Show loader immediately on submit
+=======
+    $("#loader").show();  // Show loader immediately on submit
+    $("#submit-btn").prop("disabled", true); // Disable submit button
+
+    var minLoaderTime = 3000; // 3 seconds minimum loader time
+    var startTime = Date.now();
+>>>>>>> parent of df7f1f2 (fixed it)
 
     $.ajax({
         type: "POST",
         url: "mail-contact.php",
         data: $(form).serialize(),
         success: function () {
+<<<<<<< HEAD
             // $("#loader").hide();
             $("#success").slideDown("slow");
             setTimeout(function () {
@@ -303,6 +312,34 @@
 }
 
 >>>>>>> parent of e78171d (check)
+=======
+            var elapsed = Date.now() - startTime;
+            var delay = Math.max(minLoaderTime - elapsed, 0);
+
+            setTimeout(function () {
+                $("#loader").hide();
+                $("#submit-btn").prop("disabled", false);
+                $("#success").slideDown("slow").delay(3000).slideUp("slow");
+                form.reset();
+            }, delay);
+        },
+        error: function () {
+            var elapsed = Date.now() - startTime;
+            var delay = Math.max(minLoaderTime - elapsed, 0);
+
+            setTimeout(function () {
+                $("#loader").hide();
+                $("#submit-btn").prop("disabled", false);
+                $("#error").slideDown("slow").delay(3000).slideUp("slow");
+            }, delay);
+        }
+    });
+
+    return false;
+}
+
+
+>>>>>>> parent of df7f1f2 (fixed it)
 
         });
     }
