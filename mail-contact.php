@@ -12,6 +12,6 @@
 	$message = $sender_name . " has send the contact message. His / Her contact subject is " .  $subject . " and his / her phone number is " . $phone . ". He / she wrote the following... ". "\n\n" . $note;
 
 	$headers = 'From: ' . $from;
-	// mail($to, $subject, $message, $headers);
+	mail($to, $subject, $message, $headers);
 
 ?>
