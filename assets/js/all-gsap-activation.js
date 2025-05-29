@@ -19,7 +19,7 @@ menuItems.forEach(item => {
         event.preventDefault();
         const targetId = this.getAttribute('data-target');
         const targetSection = document.getElementById(targetId);
-        gsap.to(window, { duration: 1, scrollTo: targetSection });
+        gsap.to(window, { duration: 1, scrollTo: { y: targetSection, offsetY: 0 } });
     });
 });
 
